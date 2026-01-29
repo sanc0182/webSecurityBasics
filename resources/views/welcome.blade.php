@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Laravel </title>
 
         <link rel="icon" href="/Sundar_favicon%20.png" type="image/png">
         <link rel="shortcut icon" href="/Sundar_favicon%20.png" type="image/png">
