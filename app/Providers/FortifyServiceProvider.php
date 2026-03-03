@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+// Needed for logging
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+//
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -29,6 +35,29 @@ class FortifyServiceProvider extends ServiceProvider
         $this->configureActions();
         $this->configureViews();
         $this->configureRateLimiting();
+        // ***************** Logging *****************
+        Fortify::authenticateUsing(function ($request) {
+
+            $user = User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+
+                Log::info('Login successful', [
+                    'user_id' => $user->id,
+                    'ip' => $request->ip(),
+                ]);
+
+                return $user;
+            }
+
+            Log::warning('Failed login attempt', [
+                'email' => $request->email,
+                'ip' => $request->ip(),
+            ]);
+
+            return null;
+        });
+
     }
 
     /**
