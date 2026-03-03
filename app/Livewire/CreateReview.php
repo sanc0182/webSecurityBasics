@@ -26,13 +26,9 @@ class CreateReview extends Component
         ]);
 
         // 2. Create: Save the review to the database
-        Review::create([
-            'user_id' => Auth::id(), // Get the ID of the currently logged-in user
-            'product_name' => $this->product_name,
-            'review_text' => $this->review_text,
-            'category_id' => $this->category_id,
-        ]);
-
+        // Modified for Demo - SQL Injection
+        \DB::unprepared("INSERT INTO reviews (user_id, product_name, category_id, created_at, updated_at, review_text)
+        VALUES (" . Auth::id() . ", '$this->product_name', '$this->category_id', datetime('now'), datetime('now'), '$this->review_text')");
         // 3. Reset: Clear the form
         $this->reset();
 

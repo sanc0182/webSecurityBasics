@@ -182,7 +182,8 @@ return [
     |
     */
 
-    'http_only' => env('SESSION_HTTP_ONLY', true),
+    // Modified for Demo - Session Attacks (XSS + Hijacking)
+    'http_only' => env('SESSION_HTTP_ONLY', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +200,9 @@ return [
     |
     */
 
-    'same_site' => env('SESSION_SAME_SITE', 'lax'),
+    // // Modified for Demo - Session Attacks (XSS + Hijacking)
+    //'same_site' => env('SESSION_SAME_SITE', 'lax'),
+    'same_site' => null,
 
     /*
     |--------------------------------------------------------------------------
